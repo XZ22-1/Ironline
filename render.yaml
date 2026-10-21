@@ -1,0 +1,12 @@
+services:
+  - type: web
+    name: ironline-relay
+    runtime: docker
+    plan: free
+    numInstances: 1
+    healthCheckPath: /health
+    envVars:
+      - key: HOST
+        value: 0.0.0.0
+      - key: PORT
+        value: 10000
