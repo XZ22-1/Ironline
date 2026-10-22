@@ -8,7 +8,7 @@ from http import HTTPStatus
 from websockets.asyncio.server import serve
 from websockets.exceptions import ConnectionClosed
 
-VERSION = "ironline-12"
+VERSION = "ironline-19"
 ROOMS = {}
 CONNECTIONS = set()
 MAX_ROOMS = 200
@@ -44,7 +44,7 @@ class Room:
                            r0=self.ready[0], r1=self.ready[1], joined=self.peers[1] is not None)
 
 def weapon(value):
-    if type(value) is not int or not 0 <= value < 4:
+    if type(value) is not int or not 0 <= value < 6:
         raise ValueError("武器选择无效")
     return value
 
@@ -136,7 +136,7 @@ async def handler(ws):
     try:
         message = json.loads(await asyncio.wait_for(ws.recv(), 10))
         if not isinstance(message, dict) or message.get("version") != VERSION:
-            raise ValueError("游戏版本不同，请双方使用 v12")
+            raise ValueError("游戏版本不同，请双方使用 v19")
         kind = message.get("type")
         if kind == "create":
             if len(ROOMS) >= MAX_ROOMS:
@@ -223,3 +223,5 @@ async def main():
 
 if __name__ == "__main__":
     asyncio.run(main())
+
+
